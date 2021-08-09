@@ -9,8 +9,11 @@ public class KeyInput extends KeyAdapter {
     private Handler handler;
     private boolean keyDown[] = new boolean[4];
 
-    public KeyInput(Handler handler){
+    Game game;
+
+    public KeyInput(Handler handler, Game game){
         this.handler = handler;
+        this.game = game;
 
         keyDown[0] = false;
         keyDown[1] = false;
@@ -42,9 +45,13 @@ public class KeyInput extends KeyAdapter {
                 if(key == KeyEvent.VK_RIGHT) tempObject.setVelX(10);
             }
 
+            if (key == KeyEvent.VK_P){
+                if(game.gameState == Game.STATE.Game){
+                    if(Game.paused) Game.paused = false;
+                    else Game.paused = true;
+                }
+            }
             if (key == KeyEvent.VK_ESCAPE) System.exit(1);
-
-
         }
 
     }
@@ -67,7 +74,6 @@ public class KeyInput extends KeyAdapter {
             // Vertical movement
             if(!keyDown[0] && !keyDown[1]) tempObject.setVelY(0);
             if(!keyDown[2] && !keyDown[3]) tempObject.setVelX(0);
-
         }
 
         if(tempObject.getId() == ID.Player2){
